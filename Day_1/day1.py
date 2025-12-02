@@ -1,10 +1,11 @@
+import math
+
 ROTATION_PATH = "rotations\\rotations.txt"
 RESULT_PATH = "rotations\\result.txt"
 MAX_ROTATIONS = 100
 dial_pnt = 50
 password = 0
 
-print(dial_pnt)
 try:
     with open(ROTATION_PATH) as rotations:
         for rotation in rotations:
@@ -16,29 +17,18 @@ try:
             else:
                 dial_pnt += nb_clicks
 
-            print("Before: "+str(dial_pnt))
-            
-
-            if dial_pnt < 0:
-                while dial_pnt < 0:
-                    password += 1
-                    dial_pnt += MAX_ROTATIONS
-                    print("Add +1")
-                    print("Now: " + str(password))
-                if old_pnt == 0:
-                    password -= 1
-
-            if dial_pnt == 0 and old_pnt != 0:
+            if (dial_pnt > MAX_ROTATIONS and old_pnt < MAX_ROTATIONS):
                 password += 1
-                print("Add +1")
-                print("Now: " + str(password))
+                password += dial_pnt // MAX_ROTATIONS - 1
+            if (dial_pnt < 0):
+                if old_pnt > 0:
+                    password += 1
+                password += (abs(dial_pnt)) // MAX_ROTATIONS
             
-            while dial_pnt >= MAX_ROTATIONS:
-                dial_pnt -= MAX_ROTATIONS
-                print("Add +1")
-                print("Now: " + str(password))
-
-            print("After: "+str(dial_pnt))
+            dial_pnt %= MAX_ROTATIONS
+            
+            if dial_pnt == 0:
+                password += 1
 
     print("The password is: " + str(password))
 
