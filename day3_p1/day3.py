@@ -14,7 +14,7 @@ def parse_input():
     try:
         with open(INPUT_PATH) as input:
             for line in input:
-                matrix.append(line[:len(line)-1]) # Removes the \n at the end of each line
+                matrix.append(line.rstrip('\n')) # Removes the \n at the end of each line
         return matrix
     except:
         raise Exception("Error in the parsing of the input")
